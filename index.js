@@ -49,18 +49,18 @@ d3.csv("covid-06-11-2021.csv").then(function (data) {
         //On fusionne les donnees avec le GeoJSON
 
         // On parcours les départements du GeoJSON un par un
-        for (var j = 0; j < json.features.length; j++) {
+        // for (var j = 0; j < json.features.length; j++) {
 
-            var departement = json.features[j].properties.code;
+        //     var departement = json.features[j].properties.code;
 
-            var jourDepchoisi = cleanData.find(row => (row.jour == jourChoisi && row.dep == departement));
-            var depchoisi = cleanData.filter(row => row.dep == departement)
-            console.log(depchoisi)
-            // console.log(jourDepchoisi)
-            json.features[j].properties.value = depchoisi[j].hosp
-            console.log("#########")
-            //console.log(jourDepchoisi)
-        }
+        //     var jourDepchoisi = cleanData.find(row => (row.jour == jourChoisi && row.dep == departement));
+        //     var depchoisi = cleanData.filter(row => row.dep == departement)
+        //     console.log(depchoisi)
+        //     // console.log(jourDepchoisi)
+        //     json.features[j].properties.value = depchoisi[j].hosp
+        //     console.log("#########")
+        //     //console.log(jourDepchoisi)
+        // }
         //3. Affichage des données d'une journée
 
         for (var i = 0; i < data.length; i++) {
@@ -72,25 +72,26 @@ d3.csv("covid-06-11-2021.csv").then(function (data) {
 
             //  console.log(hosps)
         }
+        drawMap(0);
 
         //###############################################Fonction##############################################################
         // 7- Fonction d'affichage de données
+        
         function drawMap(currentDay) {
-            // On parcours les départements du GeoJSON un par un
             for (var j = 0; j < json.features.length; j++) {
-                // console.log(jourDepchoisi)
-                var jourChoisi = cleanData.filter(row => row.jour == currentDay)
-                json.features[j].properties.value = jourChoisi[j].hosp
-                console.log("#########")
-                //console.log(jourDepchoisi)
-            }
 
+                var departement = json.features[j].properties.code;
+                var depChoisi = cleanData.filter(row => row.dep == departement)
+                console.log(depChoisi[currentDay].hosp)
+                json.features[j].properties.value = depChoisi[currentDay].hosp
+            }
+            // On parcours les départements du GeoJSON un par un
 
             d3.select("#slider").on("input", function() {
                 drawMap(+this.value);
             });
 
-            d3.select('#day').html("Semaine : " + (Math.floor(this.value/7)+1));
+            d3.select('#day').html("Semaine : " + (Math.floor(currentDay/7)+1));
 
             carte = svg.selectAll("path").data(json.features);
             
@@ -107,7 +108,6 @@ d3.csv("covid-06-11-2021.csv").then(function (data) {
                         // si pas de valeur alors en gris
                         return "#ccc";
                     }
-
 
                 })
                 .on("mousemove", function (e, d) {
@@ -130,7 +130,6 @@ d3.csv("covid-06-11-2021.csv").then(function (data) {
                     tooltip.classed('hidden', true);
                 });
         }
-
         //###############################################Fonction##############################################################
           /*g.selectAll("path")
                .data(json.features)
@@ -146,8 +145,6 @@ d3.csv("covid-06-11-2021.csv").then(function (data) {
                        // si pas de valeur alors en gris
                        return "#ccc";
                    }
-   
-   
    
                })
                .on("mousemove", function (e, d) {
@@ -170,9 +167,6 @@ d3.csv("covid-06-11-2021.csv").then(function (data) {
                    tooltip.classed('hidden', true);
                });
    */
-   
-   
-// 8- Update Slider
             
     });
 });
