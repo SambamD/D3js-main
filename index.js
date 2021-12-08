@@ -60,10 +60,7 @@ d3.csv("covid-06-11-2021.csv").then(function (data) {
             json.features[j].properties.value = depchoisi[j].hosp
             console.log("#########")
             //console.log(jourDepchoisi)
-
         }
-
-
         //3. Affichage des données d'une journée
 
         for (var i = 0; i < data.length; i++) {
@@ -74,7 +71,6 @@ d3.csv("covid-06-11-2021.csv").then(function (data) {
             var hosps = data[i].hosp;
 
             //  console.log(hosps)
-
         }
 
         //###############################################Fonction##############################################################
@@ -83,13 +79,22 @@ d3.csv("covid-06-11-2021.csv").then(function (data) {
             // On parcours les départements du GeoJSON un par un
             for (var j = 0; j < json.features.length; j++) {
                 // console.log(jourDepchoisi)
-                json.features[j].properties.value = currentDay.hosp
+                var jourChoisi = cleanData.filter(row => row.jour == currentDay)
+                json.features[j].properties.value = jourChoisi[j].hosp
                 console.log("#########")
                 //console.log(jourDepchoisi)
             }
 
-            carte = svg.selectAll("path").data(json.features);
 
+            d3.select("#slider").on("input", function() {
+                drawMap(+this.value);
+            });
+
+            d3.select('#day').html("Semaine : " + (Math.floor(this.value/7)+1));
+
+            carte = svg.selectAll("path").data(json.features);
+            
+            d3.select('#day').html( valeur de la semaine selectionnée );
             carte.join("path")
                 .attr("class", "enter")
                 .attr("d", path)
@@ -128,7 +133,7 @@ d3.csv("covid-06-11-2021.csv").then(function (data) {
         }
 
         //###############################################Fonction##############################################################
-          g.selectAll("path")
+          /*g.selectAll("path")
                .data(json.features)
                .join("path")
                .attr("d", path)
@@ -165,12 +170,10 @@ d3.csv("covid-06-11-2021.csv").then(function (data) {
                    // on cache le toolip
                    tooltip.classed('hidden', true);
                });
-   
+   */
    
    
 // 8- Update Slider
-            d3.select("#slider").on("input", function() {
-                drawMap(+this.value);
-            });
+            
     });
 });
