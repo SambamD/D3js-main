@@ -1,0 +1,19 @@
+{
+  "name": "tp3-dataviz-amadou-deme-p2113550",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html"
+  },
+  "dependencies": {
+    "d3": "^7.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.2.0",
+    "@babel/plugin-transform-runtime": "^7.16.4",
+    "parcel-bundler": "^1.6.1"
+  },
+  "keywords": []
+}
