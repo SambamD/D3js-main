@@ -94,7 +94,6 @@ d3.csv("covid-06-11-2021.csv").then(function (data) {
 
             carte = svg.selectAll("path").data(json.features);
             
-            d3.select('#day').html( valeur de la semaine selectionnée );
             carte.join("path")
                 .attr("class", "enter")
                 .attr("d", path)
